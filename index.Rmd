@@ -8,16 +8,17 @@ output:
     highlight: github
 ---
 
-<img src="biophoto.jpg" width = "200" height ="200" />
 <p align="center">
 
 #### Bertrand Black
-Office: Jeffords 303
- 
+Office: Jefford's Hall 303
 Email: bertrand.black@uvm.edu
+
+
+<img src="biophoto.jpg" width = "200" height ="200" />
 
 ### Homework Assignments
 
-#### Week 1: Nothing due
+* [Week 1 (Feb 3, 2021)] Nothing due
 
 #### Week 2: [Homework 2](HW2.html) 

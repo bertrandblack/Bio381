@@ -2,7 +2,10 @@
 title: "My Homepage"
 author: "Bertrand Black"
 date: "February 2021"
-output: html_document
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 ## this is my test repo!

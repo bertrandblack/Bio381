@@ -7,12 +7,13 @@ output:
     theme: cayman
     highlight: github
 ---
-
 <p align="center">
 <img src="biophoto.jpg" width = "200" height ="200" />
+<p align="center">
 
 #### Bertrand Black
 Office: Jefford's Hall 303
+
 Email: bertrand.black@uvm.edu
 
 ---

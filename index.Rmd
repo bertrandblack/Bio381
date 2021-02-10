@@ -9,35 +9,13 @@ output:
 ---
 <p align="center">
 
-#### TA: Lauren Ash 
-Office: Marsh Life Science 211   
-Office Hours: Tuesday 11-1pm and by appointment    
-Email: lvash@uvm.edu   
+#### Bertrand Black
+Office: Jeffords 303
+ 
+Email: bertrand.black@uvm.edu
 
-<img src="Lauren.jpg" width="200" height="200" />
+#### Homework Assignments
 
-## Helpful Links   
-* [Course Webpage](https://gotellilab.github.io/Bio381/)   
-* [`inspace` Meeting Link](https://inspace.chat/space/596BB231B3FA1F4A90063B5CDAB9B7E1B09A341F)  
-* [Office hours `Whereby` link](https://whereby.com/bio381_labs)  
-* [Lecture Videos](https://ngotelli.github.io/Bio381Vids)  
-* [RMarkdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)   
-* [Github website templates](https://jekyllthemes.io/)   
-* [R help](http://stackoverflow.com/questions/tagged/r)   
+### Week 1: **Nothing due**
 
-## Table of contents for Homework Assignments    
-* [Week 1 (Feb 3, 2021): Program Installation ](#id-section1)
-* [Week 2 (Feb 10, 2021): Building your Webpage](#id-section2)
-* [Week 3 (Feb 17, 2021): Regular Expression Puzzles](#id-section3)
-* [Week 4 (Feb 24, 2021): Typora and LaTeX](#id-section4)  
-**March 2: Progress Report Check in Date** Have Homeworks 3-4 (nothing assigned Week 1 and 2) updated and complete by the end of the day
-* [Week 5: ](#id-section5)
-* [Week 6: ](#id-section6) 
-* [Week 7: ](#id-section7)   
-**March 24: Progress Report Check in Date** Have Homeworks 5-7 updated and complete by the end of the day
-* [Week 8: ](#id-section8)
-* [Week 9: ](#id-section9)  
-* [Week 10: ](#id-section10)   
-**April 15: Progress Report Check in Date** Have Homeworks 8-10 updated and complete by the end of the day
-* [Week 11: ](#id-section11)  
-* [Week 12: ](#id-section12)  
+### Week 2: [Link text: HW1](HW1.html) 

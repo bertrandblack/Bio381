@@ -8,6 +8,7 @@ output:
     highlight: github
 ---
 <p align="center">
+<img src="PhotoName.jpg" width = "200" height ="200" />
 
 #### Bertrand Black
 Office: Jeffords 303
@@ -18,4 +19,4 @@ Email: bertrand.black@uvm.edu
 
 ### Week 1: **Nothing due**
 
-### Week 2: [Link text: HW1](HW1.html) 
+### Week 2: [Link text: HW2](HW2.html) 

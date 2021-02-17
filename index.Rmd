@@ -23,3 +23,5 @@ Email: bertrand.black@uvm.edu
 ##### Week 1: Nothing due
 
 ##### Week 2: [Homework 2](HW2.html) 
+
+##### Week 3: [Homework 3](HW3.html) 

@@ -1,0 +1,200 @@
+---
+title: "HW3"
+author: "Bertrand Black"
+date: "2/17/2021"
+output: html_document
+---
+
+1. How to convert from excel to .csv format
+
+   Search term: `\s\s+`
+    * `\s` matches any whitespace character
+    * `\s+` uses a quantifier `+` to match between *one* and unlimited whitespace characters  
+
+   Replace term: `,`
+   
+    * `,` replaces the whitespace with a comma  
+    
+   Result: 
+    
+   ```
+    First String    Second      1.22      3.4
+    Second          More Text   1.555555  2.2220
+    Third           x           3         124
+   ```
+
+   ```
+    First String,Second,1.22,3.4
+    Second,More Text,1.555555,2.2220
+    Third,x,3,124
+   ```
+   
+2. How to reformat a list
+
+   Search term: `(\w+),\s(\w+),\s(.*)`  
+   * `\w+` uses a quantifier `+` to match between *one* and unlimited word characters
+   * `,` indicates that the `\w+` will stop when it finds a comma in the line
+   * `\s` matches any whitespace character
+   * `.*` matches any character (except for line terminators)
+   * `()` indicate the capture groups (1-3) from right to left  
+
+   Replace term: `\2 \1 (\3)`
+   * `\#` replaces the capture group in the order specified.   
+
+
+   Result: 
+    
+   ```
+Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr
+   ```
+
+   ```
+Bryan Ballif (University of Vermont)
+Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)
+   ```
+3. How to change specific whitespaces to line breaks 
+
+   Search term: `mp3\s`  
+   * `mp3\s` searches for the space after the mp3 in the line
+
+   Replace term: `mp3\n`
+   * `mp3\n` replaces the space with a line break and adds mp3
+
+
+   Result: 
+    
+   ```
+0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3
+   ```
+
+   ```
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+   ```
+4. How to grab specific characters and add to a different word
+
+   Search term: `(\d+)\s(.*)(\.\w+)`  
+   * `\d+` matches between *one* and unlimited digits (equal to [0-9])
+   * `\s` matches any whitespace character
+   * `.*` matches any character (except for line terminators)
+   * `\.` escapes the period and matches the character `.` literally
+   * `\w+` uses a quantifier `+` to match between *one* and unlimited word characters
+   * `()` indicate the capture groups (1-3) from right to left  
+
+
+   Replace term: `\2_\1\3`
+   * `\2_\1\3` replaces the captures (1-3) in the new order with an `_` between capture 2 and 1  
+  
+   Result: 
+    
+   ```
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+
+   ```
+
+   ```
+Georgia Horseshoe_0001.mp3
+Billy In The Lowground_0002.mp3
+Cherokee Shuffle_0003.mp3
+Walking Cane_0004.mp3
+   ```
+5. Abbreviating specific characters in a line
+
+   Search term: `(\w)\w+,(\w+),\d*\.\d,(\d+)`
+   * `\w` matches any word character (equal to [a-z, A-Z,0-9,_])
+   * `\w+` uses a quantifier `+` to match between one and unlimited word characters
+   * `\d*` matches between *zero* and unlimited digits (equal to [0-9])
+   * `\.` scapes the period and matches the character `.` literally
+   * `\d`  matches a digit (equal to [0-9])
+   * `\d+` matches between *one* and unlimited digits (equal to [0-9])
+   * `()` indicate the capture groups (1-3) from right to left  
+
+
+   Replace term: `\1_\2,\3`
+   * replaces the captures (1-3) in the new order with an `_` between capture 1 and 2 and a `,` before the third capture
+ 
+ 
+   Result: 
+    
+   ```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+   ```
+
+   ```
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55
+   ```
+6. Capturing specific characters with a word
+
+   Search term: `(\w)\w+,(\w{4})\w+,\d+\.\d,(\d+)` 
+   * `\w` matches any word character (equal to [a-z, A-Z,0-9,_])
+   * `\w+` uses a quantifier `+` to match between one and unlimited word characters
+   * `\w{4}` matches exactly 4 word characters 
+   * `\d+` matches between *one* and unlimited digits (equal to [0-9])
+   * `\.` scapes the period and matches the character `.` literally
+   * `\d`  matches a digit (equal to [0-9])
+   * `()` indicate the capture groups (1-3) from right to left 
+
+
+   Replace term: `\1_\2,\3`
+   * `\1_\2,\3` replaces the captures (1-3) in the new order with an `_` between capture 1 and 2 and a `,` before the third capture
+
+
+   Result: 
+    
+   ```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+   ```
+
+   ```
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55
+   ```
+   
+7. Fusion and reversal of specific characters
+
+   Search term: `(\w{3})\w+,(\w{3})\w+,(\d+\.\d),(\d+)`  
+   * `\w{3}` matches exactly 3 word characters
+   * `\w+` uses a quantifier `+` to match between one and unlimited word characters
+   * `\d+` matches between *one* and unlimited digits (equal to [0-9])
+   * `\.` scapes the period and matches the character `.` literally
+   * `\d`  matches a digit (equal to [0-9])
+   * `()` indicate the capture groups (1-4) from right to left 
+
+   Replace term: `\1\2,\4,\3` 
+   
+   * `\1\2,\4,\3` replaces the captures (1-4) in the new order with an `,` after capture 2 and 4 
+   
+   Result: 
+    
+   ```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+   ```
+
+   ```
+Campen, 44, 10.2
+Camher, 3, 10.5
+Myrpun, 4, 12.2
+Lasneo, 55, 3.3
+   ```

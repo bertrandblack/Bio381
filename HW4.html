@@ -1,0 +1,605 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>HW4</title><style type='text/css'>html {overflow-x: initial !important;}:root { --node-fill: #ECECFF; --node-border: #CCCCFF; --cluster-fill: #ffffde; --cluster-border: #aaaa33; --note-fill: #fff5ad; --note-border: #aaaa33; --mermaid-color: var(--text-color); }
+
+
+:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+.mac-os-11 { --title-bar-height:28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-require-zoom-fix foreignobject { font-size: var(--mermaid-font-zoom); }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+/* Fira Code */
+/* 全局属性 */
+:root{
+  --select-text-bg-color: #e49123;
+  --bg-color:  #fafafa;                   /*change background*/
+  --text-color: #333333;                  /*change text color*/
+  --md-char-color: #C7C5C5;               /*change color of meta characetrs like `*` in markdown */
+  --meta-content-color: #5b808d;          /*change color of meta contents like image text or link address in markdown */
+
+  --primary-color: #428bca;               /* color of primary buttons */
+  --primary-btn-border-color: #285e8e;
+  --primary-btn-text-color: #fff;
+
+  --window-border: 1px solid #eee;        /*border for sidebar, etc*/
+
+  --active-file-bg-color: #eee;           /*background color if list item in file tree or file list*/
+  --active-file-text-color: inherit;
+  --active-file-border-color: #777;
+
+  --side-bar-bg-color: var(--bg-color);     /*change background of sidebar*/
+  --item-hover-bg-color: rgba(229, 229, 229, 0.59); /*background of control items when hover, like menu in sidebar*/
+  --item-hover-text-color: inherit;
+  --monospace: monospace;                   /*monospace font for codes, fences*/
+}
+::selection {
+	background:#b981d1;
+	color:white
+}
+::-moz-selection {
+	background:#b981d1;
+	color:white
+}
+::-webkit-selection {
+	background:#b981d1;
+	color:white
+}
+
+#write {
+  max-width: 914px;
+  font-size: 16px;
+  text-align: left;
+  letter-spacing: 0px;
+  font-family: "Fira Code", "微软雅黑","PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/*段落*/
+#write p {
+  font-size: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 0;
+  line-height: 26px;
+  color: black;
+}
+
+/*  todo item 对齐 */
+#write input[type="checkbox"] {
+  margin-top: calc(1em - 2px);
+  margin-right: 5px;
+  left: -3px;
+}
+
+/*标题*/
+#write h1,
+#write h2,
+#write h3,
+#write h4,
+#write h5,
+#write h6 {
+  margin: .72em 0;
+  padding: 0px;
+  font-weight: bold;
+  color: black;
+}
+#write h1 {
+  margin: 1.2em 0;
+  font-size: 2rem;
+  /* text-align: center; */
+}
+#write h2::before{
+  content: "✔";
+  font-weight: bold;
+  color: #ffb11b;
+  margin-right: 4px
+}
+#write h2 {
+  font-size: 1.7rem;
+  margin: 1em 0;
+}
+#write h2 span {
+ font-weight: bold;
+ color: #333;
+ padding: 3px 10px 1px;
+}
+
+#write h3 {
+  font-size: 1.5rem;
+}
+#write h4 {
+  font-size: 1.25rem;
+}
+#write h5 {
+  font-size: 1rem;
+}
+#write h6 {
+  font-size: 1rem;
+}
+
+/* 列表 */
+#write ul,
+#write ol {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 40px;
+  color: black;
+}
+#write ul {
+  list-style-type: disc;
+}
+#write ul ul {
+  list-style-type: square;
+}
+#write ol {
+  list-style-type: decimal;
+}
+/* 列表内容 */
+#write li section {
+  font-size:15px;
+}
+
+/* 字体加粗 */
+/* #write strong::before {
+  content: '「';
+} */
+
+#write strong {
+  color: #E49123;
+  font-weight: bold;
+}
+
+/* #write strong::after {
+  content: '」';
+} */
+
+/*引用*/
+#write blockquote {
+  margin-bottom: 16px;
+  margin-top: 16px;
+  padding: 10px 10px 10px 20px;
+  font-size: 0.9em;
+  background: #fff9f9;
+  border-left: 3px solid #ffb11b;
+  color: #6a737d;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#write blockquote p {
+  line-height: 26px;
+}
+
+/* 超链接 */
+#write a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #E49123;
+  border-bottom: 1px solid #E49123;
+}
+
+/* 分割线 */
+#write hr {
+  height: 1px;
+  padding: 0;
+  border: none;
+  text-align: center;
+  background-image: linear-gradient(to right,rgba(231, 93, 109,0.3),rgba(255, 159, 150,0.75),rgba(255, 216, 181,0.3));
+}
+
+/* background-color 由 rgba 转为 HEX*/
+#write code{
+  font-size: 14px;
+  color:  rgb(235, 76, 55);
+  background-color: #f0f0f0;
+}
+
+/* 行内代码 */
+#write p code,
+#write span code,
+#write li code {
+  word-wrap: break-word;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin: 0 2px;
+  word-break: break-all;
+}
+
+/* 文章插图 */
+#write img {
+  display: block;
+  margin: 0 auto;
+  width: 85%;
+  max-width: 100%;
+  border-radius: 5px;
+  box-shadow:0px 4px 12px #84A1A8;
+  border: 0px;
+}
+
+#write table tr {
+  border: 0;
+  border-top: 1px solid #ccc;
+  background-color: white;
+}
+#write table tr:nth-child(2n) {
+  background-color: #F8F8F8;
+}
+#write table tr th,
+#write table tr td {
+  font-size: 16px;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  text-align: left;
+}
+#write table tr th {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+
+/* 上角标 */
+#write .md-footnote {
+ font-weight: bold;
+ color: #E49123;
+}
+#write .md-footnote > .md-text:before {
+ content: '['
+}
+#write .md-footnote > .md-text:after {
+ content: ']'
+}
+
+
+/* 下角标 */
+#write .md-def-name {
+  padding-right: 1.8ch;
+}
+#write .md-def-name:before {
+  content: '[';
+  color: #000;
+}
+#write .md-def-name:after {
+  color: #000;
+}
+
+
+/* 代码块主题 */
+code, .md-fences {
+	padding: .5em;
+	/* border: 1px solid #ccc; */
+	padding: .1em;
+	border-radius: 5px;
+	margin-left: 0.2em;
+  margin-right: 0.2em;
+  font-family: "Fira Code", "微软雅黑","PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.md-fences {
+  margin: 0 0 20px;
+  background-color: #292b35;
+  color: rgb(236, 236, 236);
+	/* font-size: 1em; */
+	padding: 0.3em 1em;
+  padding-top: 0.4em;
+  box-shadow: 0px 4px 9px grey;
+}
+.CodeMirror div.CodeMirror-cursor {
+  margin-left: 4.6px;
+  border-left: 1px solid #7ba0f0;
+  z-index: 5;
+}
+.cm-s-inner div.CodeMirror-selected {
+  background: rgba(113, 124, 180, 0.2);
+}
+.CodeMirror-code{
+  margin-left: 5px;
+}
+.cm-s-inner .cm-keyword {
+  color: #c792ea;
+  font-weight: 450;
+}
+.cm-s-inner .cm-operator {
+  color: #89ddff;
+}
+.cm-s-inner .cm-variable-2 {
+  color: #eeffff;
+}
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #f07178;
+}
+.cm-s-inner .cm-builtin {
+  color: #ffcb6b;
+}
+.cm-s-inner .cm-atom {
+  color: #f78c6c;
+}
+.cm-s-inner .cm-number {
+  color: #ff5370;
+}
+.cm-s-inner .cm-def {
+  color: #82aaff;
+}
+.cm-s-inner .cm-string {
+  color: #c3e88d;
+}
+.cm-s-inner .cm-string-2 {
+  color: #f07178;
+}
+.cm-s-inner .cm-comment {
+  color: #676e95;
+}
+.cm-s-inner .cm-variable {
+  color: #f07178;
+}
+.cm-s-inner .cm-tag {
+  color: #ff5370;
+}
+.cm-s-inner .cm-meta {
+  color: #ffcb6b;
+}
+.cm-s-inner .cm-attribute {
+  color: #c792ea;
+}
+.cm-s-inner .cm-property {
+  color: #c792ea;
+}
+.cm-s-inner .cm-qualifier {
+  color: #decb6b;
+}
+.cm-s-inner .cm-variable-3,
+.cm-s-inner .cm-type {
+  color: #decb6b;
+}
+.cm-s-inner .cm-error {
+  color: rgba(255, 255, 255, 1);
+  background-color: #e9405c;
+}
+
+/*流程图样式*/
+pre[lang='sequence'],
+pre[lang='flow'],
+pre[lang='mermaid']
+{
+  background: #ffffff;
+  color: #333333;
+}
+
+ :root {--mermaid-font-zoom:1.5em ;} 
+</style>
+</head>
+<body class='typora-export os-windows'>
+<div id='write'  class=''><h2><a name="hw4" class="md-header-anchor"></a><span>HW4</span></h2><h4><a name="bertrand-black----24-february-2021" class="md-header-anchor"></a><span>Bertrand Black  - 24 February 2021</span></h4><hr /><ol start='' ><li><span>Create a Typora document to illustrate the following formatting:</span></li></ol><h1><a name="headers" class="md-header-anchor"></a><span>Headers</span></h1><ul><li><h1><a name="header-1" class="md-header-anchor"></a><span>Header 1</span></h1></li><li><h2><a name="header-2" class="md-header-anchor"></a><span>Header 2</span></h2></li><li><h3><a name="header-3" class="md-header-anchor"></a><span>Header 3</span></h3></li><li><h4><a name="header-4" class="md-header-anchor"></a><span>Header 4</span></h4></li><li><h5><a name="header-5" class="md-header-anchor"></a><span>Header 5</span></h5></li><li><h6><a name="header-6" class="md-header-anchor"></a><span>Header 6</span></h6></li></ul><h1><a name="unordered-lists" class="md-header-anchor"></a><span>Unordered Lists</span></h1><ul><li><p><span>Item 1</span></p></li><li><p><span>Item 2</span></p><ul><li><span>Item 2a</span></li><li><span>Item 2b</span></li></ul></li></ul><h1><a name="ordered-lists" class="md-header-anchor"></a><span>Ordered Lists</span></h1><ol start='' ><li><p><span>Item 1</span></p></li><li><p><span>Item 2</span></p></li><li><p><span>Item 3</span></p><ul><li><span>Item 3a</span></li><li><span>Item 3b</span></li></ul></li></ol><h1><a name="manual-line-breaks" class="md-header-anchor"></a><span>Manual Line Breaks</span></h1><p><span>Roses are red,  </span><br/><span>Violets are blue.  </span></p><h1><a name="links" class="md-header-anchor"></a><span>Links</span></h1><p><a href='http://example.com' target='_blank' class='url'>http://example.com</a></p><p><a href='http://example.com'><span>linked phrase</span></a></p><h1><a name="images" class="md-header-anchor"></a><span>Images</span></h1><p><img src="https://www.fernsoftheworld.com/wp-content/uploads/2019/08/IMG_3133.jpg" referrerpolicy="no-referrer" alt="scales"></p><h1><a name="block-quotes" class="md-header-anchor"></a><span>Block quotes</span></h1><p><span>A friend once said:</span></p><blockquote><p><span>It&#39;s always better to give </span>
+<span>than to receive.</span></p></blockquote><h1><a name="plain-code-blocks" class="md-header-anchor"></a><span>Plain code blocks</span></h1><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 9px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">This text is displayed verbatim / preformatted</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 17px;"></div><div class="CodeMirror-gutters" style="display: none; height: 17px;"></div></div></div></pre><h1><a name="r-code-blocks" class="md-header-anchor"></a><span>R code blocks</span></h1><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="{r}"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="{r}"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 9px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">summary</span>(<span class="cm-variable">cars</span><span class="cm-operator cm-dollar">$</span><span class="cm-variable">dist</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">summary</span>(<span class="cm-variable">cars</span><span class="cm-operator cm-dollar">$</span><span class="cm-variable">speed</span>)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 35px;"></div><div class="CodeMirror-gutters" style="display: none; height: 35px;"></div></div></div></pre><h1><a name="in-line-blocks" class="md-header-anchor"></a><span>In-line blocks</span></h1><p><span>There were </span><code>r nrow(cars)</code><span> cars studied</span></p><h1><a name="in-line-latex-equations" class="md-header-anchor"></a><span>In-line LaTex equations</span></h1><p><span>These equations such as </span><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="9.488ex" height="2.11ex" viewBox="0 -755.9 4085 908.7" role="img" focusable="false" style="vertical-align: -0.355ex;"><defs><path stroke-width="0" id="E2-MJMATHI-61" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path><path stroke-width="0" id="E2-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="0" id="E2-MJMAIN-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path stroke-width="0" id="E2-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="0" id="E2-MJMAIN-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E2-MJMATHI-61" x="0" y="0"></use><use xlink:href="#E2-MJMAIN-3D" x="806" y="0"></use><use xlink:href="#E2-MJMAIN-33" x="1862" y="0"></use><use xlink:href="#E2-MJMAIN-2B" x="2584" y="0"></use><use xlink:href="#E2-MJMAIN-34" x="3585" y="0"></use></g></svg></span><script type="math/tex">a = 3 + 4</script><span> will appear inside a single line of text. </span></p><h1><a name="centered-latex-equations" class="md-header-anchor"></a><span>Centered LaTex equations</span></h1><p><span class="MathJax_SVG" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="9.118ex" height="4.095ex" viewBox="0 -1107.7 3925.6 1763.1" role="img" focusable="false" style="vertical-align: -1.522ex;"><defs><path stroke-width="0" id="E3-MJMATHI-3B1" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path><path stroke-width="0" id="E3-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="0" id="E3-MJMATHI-3B2" d="M29 -194Q23 -188 23 -186Q23 -183 102 134T186 465Q208 533 243 584T309 658Q365 705 429 705H431Q493 705 533 667T573 570Q573 465 469 396L482 383Q533 332 533 252Q533 139 448 65T257 -10Q227 -10 203 -2T165 17T143 40T131 59T126 65L62 -188Q60 -194 42 -194H29ZM353 431Q392 431 427 419L432 422Q436 426 439 429T449 439T461 453T472 471T484 495T493 524T501 560Q503 569 503 593Q503 611 502 616Q487 667 426 667Q384 667 347 643T286 582T247 514T224 455Q219 439 186 308T152 168Q151 163 151 147Q151 99 173 68Q204 26 260 26Q302 26 349 51T425 137Q441 171 449 214T457 279Q457 337 422 372Q380 358 347 358H337Q258 358 258 389Q258 396 261 403Q275 431 353 431Z"></path><path stroke-width="0" id="E3-MJMATHI-3B4" d="M195 609Q195 656 227 686T302 717Q319 716 351 709T407 697T433 690Q451 682 451 662Q451 644 438 628T403 612Q382 612 348 641T288 671T249 657T235 628Q235 584 334 463Q401 379 401 292Q401 169 340 80T205 -10H198Q127 -10 83 36T36 153Q36 286 151 382Q191 413 252 434Q252 435 245 449T230 481T214 521T201 566T195 609ZM112 130Q112 83 136 55T204 27Q233 27 256 51T291 111T309 178T316 232Q316 267 309 298T295 344T269 400L259 396Q215 381 183 342T137 256T118 179T112 130Z"></path><path stroke-width="0" id="E3-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="0" id="E3-MJMATHI-3B3" d="M31 249Q11 249 11 258Q11 275 26 304T66 365T129 418T206 441Q233 441 239 440Q287 429 318 386T371 255Q385 195 385 170Q385 166 386 166L398 193Q418 244 443 300T486 391T508 430Q510 431 524 431H537Q543 425 543 422Q543 418 522 378T463 251T391 71Q385 55 378 6T357 -100Q341 -165 330 -190T303 -216Q286 -216 286 -188Q286 -138 340 32L346 51L347 69Q348 79 348 100Q348 257 291 317Q251 355 196 355Q148 355 108 329T51 260Q49 251 47 251Q45 249 31 249Z"></path><path stroke-width="0" id="E3-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E3-MJMATHI-3B1" x="0" y="0"></use><use xlink:href="#E3-MJMAIN-3D" x="917" y="0"></use><g transform="translate(1695,0)"><g transform="translate(397,0)"><rect stroke="none" width="1712" height="60" x="0" y="220"></rect><use transform="scale(0.707)" xlink:href="#E3-MJMATHI-3B2" x="924" y="765"></use><g transform="translate(60,-412)"><use transform="scale(0.707)" xlink:href="#E3-MJMATHI-3B4" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E3-MJMAIN-2B" x="451" y="0"></use><g transform="translate(869,0)"><use transform="scale(0.707)" xlink:href="#E3-MJMATHI-3B3" x="0" y="0"></use><use transform="scale(0.5)" xlink:href="#E3-MJMATHI-78" x="732" y="-356"></use></g></g></g></g></g></svg></span><script type="math/tex">\alpha = \frac{\beta}{\delta + \gamma_x}</script></p><h1><a name="horizontal-line" class="md-header-anchor"></a><span>Horizontal Line</span></h1><ul><li><hr /></li><li><hr /></li></ul><h1><a name="simple-table" class="md-header-anchor"></a><span>Simple Table</span></h1><figure><table><thead><tr><th><span>First Header</span></th><th><span>Second Header</span></th></tr></thead><tbody><tr><td><span>Content Cell</span></td><td><span>Content Cell</span></td></tr><tr><td><span>Content Cell</span></td><td><em><span>formatted text</span></em></td></tr></tbody></table></figure><h1><a name="text-highlighting" class="md-header-anchor"></a><span>Text highlighting</span></h1><p><mark><span>highlight</span></mark></p><p><span>2 - 3.  Take a smart phone photo of your flow chart and import the image into your Typora document.</span></p><p><img src="BB_FlowChart.jpg" referrerpolicy="no-referrer" alt="Bean Beetle Flow Chart"></p><p><span>4 -5. See if you can convert your hand-drawn flowchart into one of these display items and embed it in your Typora document.</span></p><div class="md-diagram-panel"><svg id="mermaidChart3" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="1279.8031005859375" style="max-width: 1045px; height: 1319.8px;" viewBox="0 0 1045.0023193359375 1279.8031005859375" class="md-require-zoom-fix"><style>#mermaidChart3{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:10.666666666666666px;fill:#333333;}#mermaidChart3 .error-icon{fill:hsl(60,100%,100%);}#mermaidChart3 .error-text{fill:rgb(0,0,0);stroke:rgb(0,0,0);}#mermaidChart3 .edge-thickness-normal{stroke-width:2px;}#mermaidChart3 .edge-thickness-thick{stroke-width:3.5px;}#mermaidChart3 .edge-pattern-solid{stroke-dasharray:0;}#mermaidChart3 .edge-pattern-dashed{stroke-dasharray:3;}#mermaidChart3 .edge-pattern-dotted{stroke-dasharray:2;}#mermaidChart3 .marker{fill:#050505;}#mermaidChart3 .marker.cross{stroke:#050505;}#mermaidChart3 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:10.666666666666666px;}#mermaidChart3 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaidChart3 .label text{fill:#333;}#mermaidChart3 .node rect,#mermaidChart3 .node circle,#mermaidChart3 .node ellipse,#mermaidChart3 .node polygon,#mermaidChart3 .node path{fill:#ECECFF;stroke:hsl(240,60%,86.2745098039%);stroke-width:1px;}#mermaidChart3 .node .label{text-align:center;}#mermaidChart3 .node.clickable{cursor:pointer;}#mermaidChart3 .arrowheadPath{fill:undefined;}#mermaidChart3 .edgePath .path{stroke:#050505;stroke-width:1.5px;}#mermaidChart3 .flowchart-link{stroke:#050505;fill:none;}#mermaidChart3 .edgeLabel{background-color:#f4f4f4;text-align:center;}#mermaidChart3 .edgeLabel rect{opacity:0.5;background-color:#f4f4f4;fill:#f4f4f4;}#mermaidChart3 .cluster rect{fill:hsl(60,100%,100%);stroke:hsl(60,60%,90%);stroke-width:1px;}#mermaidChart3 .cluster text{fill:rgb(0,0,0);}#mermaidChart3 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(60,100%,100%);border:1px solid undefined;border-radius:2px;pointer-events:none;z-index:100;}#mermaidChart3:root{--mermaid-font-family:sans-serif;}#mermaidChart3:root{--mermaid-alt-font-family:sans-serif;}#mermaidChart3 flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-A LE-B" id="L-A-B" style="opacity: 1;"><path class="path" d="M422.30976486206055,50.5L422.30976486206055,75.5L422.30976486206055,100.5" marker-end="url(#arrowhead173)" style="fill:none"></path><defs><marker id="arrowhead173" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-B LE-C" id="L-B-C" style="opacity: 1;"><path class="path" d="M422.30976486206055,143L422.30976486206055,168L422.30976486206055,193" marker-end="url(#arrowhead174)" style="fill:none"></path><defs><marker id="arrowhead174" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-C LE-D" id="L-C-D" style="opacity: 1;"><path class="path" d="M422.30976486206055,235.5L422.30976486206055,260.5L422.30976486206055,285.5" marker-end="url(#arrowhead175)" style="fill:none"></path><defs><marker id="arrowhead175" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-D LE-E" id="L-D-E" style="opacity: 1;"><path class="path" d="M422.30976486206055,328L422.30976486206055,353L422.8097648620605,378.50000305175774" marker-end="url(#arrowhead176)" style="fill:none"></path><defs><marker id="arrowhead176" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-E LE-F" id="L-E-F" style="opacity: 1;"><path class="path" d="M324.6258098204832,753.083229406665L228.6171875,887.0171813964844L228.6171875,1018.7851486206055" marker-end="url(#arrowhead177)" style="fill:none"></path><defs><marker id="arrowhead177" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-E LE-G" id="L-E-G" style="opacity: 1;"><path class="path" d="M520.9937224387855,753.0832329750331L616.0023422241211,887.0171813964844L616.5023422241208,923.7671829223636" marker-end="url(#arrowhead178)" style="fill:none"></path><defs><marker id="arrowhead178" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-G LE-H" id="L-G-H" style="opacity: 1;"><path class="path" d="M547.9983749460325,1088.7991500925168L398.8148422241211,1193.0531158447266L398.8148422241211,1229.3031158447266" marker-end="url(#arrowhead179)" style="fill:none"></path><defs><marker id="arrowhead179" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-G LE-I" id="L-G-I" style="opacity: 1;"><path class="path" d="M685.0063112925764,1088.7991513539075L833.1898422241211,1193.0531158447266L833.1898422241211,1229.3031158447266" marker-end="url(#arrowhead180)" style="fill:none"></path><defs><marker id="arrowhead180" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(228.6171875,887.0171813964844)" style="opacity: 1;"><g transform="translate(-11.3203125,-11.25)" class="label"><rect rx="0" ry="0" width="22.640625" height="22.5"></rect><foreignObject width="22.640625" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span>Yes</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(616.0023422241211,887.0171813964844)" style="opacity: 1;"><g transform="translate(-9.3984375,-11.25)" class="label"><rect rx="0" ry="0" width="18.796875" height="22.5"></rect><foreignObject width="18.796875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span>No</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(398.8148422241211,1193.0531158447266)" style="opacity: 1;"><g transform="translate(-11.3203125,-11.25)" class="label"><rect rx="0" ry="0" width="22.640625" height="22.5"></rect><foreignObject width="22.640625" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span>Yes</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(833.1898422241211,1193.0531158447266)" style="opacity: 1;"><g transform="translate(-9.3984375,-11.25)" class="label"><rect rx="0" ry="0" width="18.796875" height="22.5"></rect><foreignObject width="18.796875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span>No</span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="flowchart-A-112" transform="translate(422.30976486206055,29.25)" style="opacity: 1;"><rect rx="5" ry="5" x="-230.5078125" y="-21.25" width="461.015625" height="42.5" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-220.5078125,-11.25)"><foreignObject width="441.0234375" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Where is the best environment for microbes on bean beetles?</div></foreignObject></g></g></g><g class="node default" id="flowchart-B-113" transform="translate(422.30976486206055,121.75)" style="opacity: 1;"><rect rx="0" ry="0" x="-120.4609375" y="-21.25" width="240.921875" height="42.5" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-110.4609375,-11.25)"><foreignObject width="220.921875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">The gut is the best enviroment</div></foreignObject></g></g></g><g class="node default" id="flowchart-C-115" transform="translate(422.30976486206055,214.25)" style="opacity: 1;"><rect rx="0" ry="0" x="-247.96875" y="-21.25" width="495.9375" height="42.5" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-237.96875,-11.25)"><foreignObject width="475.9453125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Extract and culture microbes from gut and cuticle of bean beetles</div></foreignObject></g></g></g><g class="node default" id="flowchart-D-117" transform="translate(422.30976486206055,306.75)" style="opacity: 1;"><rect rx="0" ry="0" x="-206.9296875" y="-21.25" width="413.859375" height="42.5" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-196.9296875,-11.25)"><foreignObject width="393.8671875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Calculate Shannon's Diversity Index for each treatment</div></foreignObject></g></g></g><g class="node default" id="flowchart-E-119" transform="translate(422.30976486206055,614.3835906982422)" style="opacity: 1;"><polygon points="236.38359375000002,0 472.76718750000003,-236.38359375000002 236.38359375000002,-472.76718750000003 0,-236.38359375000002" transform="translate(-236.38359375000002,236.38359375000002)" class="label-container"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-231.3984375,-11.25)"><foreignObject width="462.796875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Does the gut have a greater microbial diversity than the cuticle?</div></foreignObject></g></g></g><g class="node default" id="flowchart-F-121" transform="translate(228.6171875,1040.0351486206055)" style="opacity: 1;"><rect rx="0" ry="0" x="-220.6171875" y="-21.25" width="441.234375" height="42.5" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-210.6171875,-11.25)"><foreignObject width="421.2421875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">The gut is better enviroment for microbes on bean beetles</div></foreignObject></g></g></g><g class="node default" id="flowchart-G-123" transform="translate(616.0023422241211,1040.0351486206055)" style="opacity: 1;"><polygon points="116.76796875000001,0 233.53593750000002,-116.76796875000001 116.76796875000001,-233.53593750000002 0,-116.76796875000001" transform="translate(-116.76796875000001,116.76796875000001)" class="label-container"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-98.4921875,-11.25)"><foreignObject width="196.9921875" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Is the cuticle more diverse?</div></foreignObject></g></g></g><g class="node default" id="flowchart-H-125" transform="translate(398.8148422241211,1250.5531158447266)" style="opacity: 1;"><rect rx="0" ry="0" x="-180.5625" y="-21.25" width="361.125" height="42.5" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-170.5625,-11.25)"><foreignObject width="341.1328125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">The cuticle is a better enviroment for microbes</div></foreignObject></g></g></g><g class="node default" id="flowchart-I-127" transform="translate(833.1898422241211,1250.5531158447266)" style="opacity: 1;"><rect rx="0" ry="0" x="-203.8125" y="-21.25" width="407.625" height="42.5" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-193.8125,-11.25)"><foreignObject width="387.6328125" height="22.5"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Niether is more diverse. They have the same diversity</div></foreignObject></g></g></g></g></g></g></svg></div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div>
+</body>
+</html>

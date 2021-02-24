@@ -41,7 +41,7 @@ Address 3
 %--------------------------------------
 
 
-Dear X:
+To whom it may concern:
 
 \lipsum[1-2]
 
@@ -54,6 +54,7 @@ Dear X:
 
 \begin{tabular}{@{}l}
 Best,\\
+\includegraphics[scale=0.5,width=1.0in]{signature.png}\\
 Bertrand Black\\
 PhD Student, Department of Plant Biology\\
 University of Vermont\\

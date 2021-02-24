@@ -25,3 +25,6 @@ Email: bertrand.black@uvm.edu
 ##### Week 2: [Homework 2](HW2.html) 
 
 ##### Week 3: [Homework 3](HW3.html) 
+
+##### Week 4: [Homework 4](HW4.html) 
+

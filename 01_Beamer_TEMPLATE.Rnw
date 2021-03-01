@@ -20,14 +20,14 @@
 
 % THEMES AND COLORS-------------------------
 \mode<presentation> {
-\usefonttheme{default}
+\usefonttheme{serif}
 % FONTTHEMES: default, structurebold, structuresmallcapsserif, structureitalicserif, serif, professionalfonts
 
 
-\usetheme{default}
+\usetheme{Madrid}
 % THEMES: default, AnnArbor, Antibes, Bergen, Berkeley, Berlin, Boadilla, boxes, CambridgeUS, Copenhagen, Darmstadt, Dresden, Frankfurt, Goettingen, Hannover, Ilmenau, JuanLesPins, Luebeck, Madrid, Malmoe, Marburg, Montpellier, PaloAlto, Pittsburgh, Rochester, Singapore, Szeged, Warsaw
 
-\usecolortheme{default}
+\usecolortheme{crane}
 %COLORTHEMES: default, albatross, beaver, beetle, crane, dolphin, dove, fly, lily, orchid, rose, seagull, seahorse, sidebartab, structure, whale, wolverine 
 
 % DISPLAY OPTIONS--------------------------
@@ -40,17 +40,17 @@
 % -----------------------------------------
 
 % TITLE PAGE DATA--------------------------
-\title[Short title]{Full Title of the Talk} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[Short title]{Sample } % The short title appears at the bottom of every slide, the full title is only on the title page
 
-\author{Nicholas J. Gotelli} % Your name
+\author{Bertrand Black} % Your name
 
 \institute[UVM] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
 University of Vermont \\ % Your institution for the title page
-Department of Biology \\
+Department of Plant Biology \\
 Burlington, VT 05401 USA \\ 
 \medskip
-\textit{ngotelli@uvm.edu} % Your email address
+\textit{bblack@uvm.edu} % Your email address
 }
 \date{9 January 2021} % Date, can be changed to a custom date or \today
 % -----------------------------------------
@@ -98,14 +98,15 @@ Burlington, VT 05401 USA \\
 \end{frame}
 
 % SLIDE (FIGURE)-----------------------------
-\begin{frame}
+
 \frametitle{Figure}
 % Uncomment the code on this slide to include your own image from the same directory as the template  file.
-% \begin{figure}
+\begin{figure}
    \includegraphics[width=1.0\linewidth]{UVMLogo.jpg}
 % use this format for absolute sizing
-%\includegraphics[width=3cm, height=4cm]{filename.jpg}
-% \end{figure}
+%\includegraphics[width=3cm, height=4cm]{signature.png}
+\end{figure}
+\item figure
 \end{frame}
 
 % SLIDE (TABLE)----------------------------
@@ -157,7 +158,6 @@ Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenati
 \begin{block}
 
 <<>>=
-# show some output...
 runif(10)
 @
 

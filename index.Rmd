@@ -25,6 +25,6 @@ Email: bertrand.black@uvm.edu
 
 ##### Week 3: [Homework 3](HW3.html) 
 
-##### Week 4: [Typora](HW4.html), [UVM Letter Template](BKB_UVM_Letter_TEMPLATE.pdf), [Beamer Template](01_Beamer_Template.pdf) 
+##### Week 4: [Typora](HW4.html), [UVM Letter Template](BKB_UVM_Letter_TEMPLATE.pdf), [Beamer Template](01_Beamer_TEMPLATE.pdf) 
  
 

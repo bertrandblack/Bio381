@@ -1,7 +1,7 @@
 ---
 title: "My Homepage"
 author: "Bertrand Black"
-date: "February 2021"
+date: "March 2021"
 output:
   prettydoc::html_pretty:
     theme: cayman
@@ -29,3 +29,4 @@ Email: bertrand.black@uvm.edu
  
 ##### Week 5: [Homework 5](HW5.html) 
 
+##### Week 6: [Homework 6](HW6.html)

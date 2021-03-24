@@ -8,10 +8,18 @@ library(MASS) # for maximum likelihood estimation
 # quick and dirty, a truncated normal distribution to work on the solution set
 z <- rnorm(n=3000,mean=0.2)
 z <- data.frame(1:3000,z)
-names(z) <- list("ID","myVar")
+names(z) <- list("myVar")
 z <- z[z$myVar>0,]
 str(z)
 summary(z$myVar)
+
+# My data
+z <- read.table("Athyrium_VT_Pinnae.csv",header=TRUE,sep=",", stringsAsFactors=FALSE)
+names(z) <- list("myVar")
+str(z)
+summary(z)
+
+
 
 # Plot histogram of data 
 p1 <- ggplot(data=z, aes(x=myVar, y=..density..)) +
@@ -27,6 +35,7 @@ normPars <- fitdistr(z$myVar,"normal")
 print(normPars)
 str(normPars)
 normPars$estimate["mean"] # note structure of getting a named attribute
+
 
 # Plot `normal` probability density 
 meanML <- normPars$estimate["mean"]

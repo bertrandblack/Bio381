@@ -1,0 +1,144 @@
+---
+title: "HW7"
+author: "Bertrand Black"
+date: "3/24/2021"
+output: html_document
+---
+#### Open libraries 
+```{r, echo=TRUE}
+library(ggplot2)
+library(MASS) 
+```
+### Simulation of my data
+#### Add my data 
+```{r, echo=TRUE}
+z <- read.table("Athyrium_VT_Pinnae.csv",header=TRUE,sep=",", stringsAsFactors=FALSE)
+names(z) <- list("myVar")
+str(z)
+summary(z)
+```
+#### Plot histogram of my data 
+```{r, echo = TRUE}
+p1 <- ggplot(data=z, aes(x=myVar, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) 
+print(p1)
+```
+
+#### Plot unform, normal, exponetial, and gamma probability densities to determine which best fits the data set 
+```{r, echo=TRUE}
+# Plot `normal` probability density 
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"]
+
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$myVar),len=length(z$myVar))
+
+stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+p1 + stat
+
+# Plot `exponential` probability density 
+expoPars <- fitdistr(z$myVar,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$myVar), args = list(rate=rateML))
+p1 + stat + stat2
+
+# Plot `uniform` probability density 
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$myVar), args = list(min=min(z$myVar), max=max(z$myVar)))
+p1 + stat + stat2 + stat3
+
+# Plot `gamma` probability density 
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+p1 + stat + stat2 + stat3 + stat4
+```
+
+### Test the beta probablity density on my data
+```{r, echo=TRUE}
+pSpecial <- ggplot(data=z, aes(x=myVar/(max(myVar + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$myVar/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(z$myVar), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+#### Normal probability density best fits my data 
+```{r, echo=TRUE}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+p1 + stat
+```
+
+#### New dataset simulation with same parameters as my data
+```
+normPars <- fitdistr(z2$myVar,"normal")
+print(normPars)
+     
+#      mean          sd    
+  10.7560000    2.8832731 
+ ( 0.4077564) ( 0.2883273)
+```
+```{r, echo=TRUE}
+z2 <- rnorm(n=50,mean=10.75)
+z2 <- data.frame(1:50,z2)
+names(z2) <- list("ID","myVar2")
+z2 <- z2[z2$myVar2>0,]
+print(z2)
+str(z2)
+summary(z2$myVar2)
+```
+#### Re-run the simulated data for comparison with the normal probablity density curve
+```{r, echo=TRUE}
+# Plot histogram of data 
+p2 <- ggplot(data=z2, aes(x=myVar2, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) 
+print(p2)
+
+# Add empirical density curve 
+p2 <-  p2 +  geom_density(linetype="dotted",size=0.75)
+print(p2)
+
+# Get maximum likelihood parameters for `normal`
+normPars2 <- fitdistr(z2$myVar2,"normal")
+print(normPars2)
+str(normPars2)
+normPars2$meanML2 <- normPars2$estimate["mean"]
+sdML2 <- normPars2$estimate["sd"]
+
+meanML2 <- normPars2$estimate["mean"]
+sdML2 <- normPars2$estimate["sd"]
+
+xval2 <- seq(min(z2$myVar2),max(z2$myVar2),len=length(z2$myVar2))
+
+stat2 <- stat_function(aes(x = xval2, y = ..y..), fun = dnorm, colour="red", n = length(z2$myVar2), args = list(mean = meanML2, sd = sdML2))
+p2 + stat2 
+
+```
+
+#### My original data 
+```{r, echo=FALSE}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+p1 + stat
+```
+
+#### How do the two histogram profiles compare? Do you think the model is doing a good job of simulating realistic data that match your original measurements? Why or why not?
+
+* The simulated data does not fit as well with a normal distribution as my dataset. I chose to do fern pinnae lengths for my dataset. A continuous morphological dataset such as this is expected to form a normal distribution around the mean (10.75). The simulated dataset preformed well but was not as close of a fit. 
+
+* I do not think the simulated data preformed as well as the because with such a small sample size the randomly generated numbers by chance were not as well distributed as my original dataset. With more a greater sample size it would probably improve.
+
+

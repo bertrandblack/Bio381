@@ -63,7 +63,7 @@ ggplot(tf_data) +
   xlab("Biomass (Mg ha^-1)")
 ```
 
-The summary of the linear regression model indicates that there is a significant interaction between biomass and elevation. However, the figure shows us that there is a negative relationship between tree fern elevation and biomass. With only 12 plots the trend is not clear as there appears to be a few outlier data points that are flattening the slope of the regression. 
+The summary of the linear regression model indicates that there is a significant interaction between biomass and elevation. However, the plots remained inconsistent with regard to whether there is a positive or negative relationship relationship between tree fern elevation and biomass when random numbers were generated using the means and sd from the Alves et al (2010) data set. With only 12 plots the trend is not clear as there appears to be a few outlier data points that are flattening the slope of the regression or skewing it one way or the other. 
 
 #### Re-run data to see how it changes
 ```{r, echo=TRUE}
@@ -91,7 +91,7 @@ ggplot(tf_data) +
   xlab("Biomass (Mg ha^-1)")
 ```
 
-After re-running the data more than 10 times, the relationship between biomass and elevation was at time significant and at times not significant. I was not surprised by this as I though with such a small sample size (n=12) that there would not be a strong enough interaction in order to be  constantly significant when using random positive numbers. The plots continue to show us negative relationships with biomass and elevation but also showed a positive slope in some of the tests, where increases in elevation lead to an increase in tree fern biomass. 
+After re-running the data more than 10 times, the relationship between biomass and elevation was at time significant and at times not significant. I was not surprised by this as I though with such a small sample size (n=12) that there would not be a strong enough interaction in order to be constantly significant when using random positive numbers. The plots continue to show us negative relationships with biomass and elevation but also showed a positive slope in some of the tests, where increases in elevation lead to an increase in tree fern biomass. 
 
 
 #### Limits of the data: mean and sample size

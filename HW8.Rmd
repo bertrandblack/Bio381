@@ -1,0 +1,165 @@
+---
+title: "HW8"
+author: "Bertrand Black"
+date: "4/15/2021"
+output: html_document
+---
+
+### Introduction
+For this exercise, I chose to use a data set from Alves et al (2010). This study investigated the forest structure and above ground biomass of three categories of canopy dwelling vascular plants (hardwood trees, palms, and tree ferns) from the unique Atlantic forest bioregion near the coast of southern Brazil. In my line of research (fern biogeography and biodiversity), a clear pattern has emerged where we see the highest amount of fern species richness restricted to the mid-elevations on mountains in the tropics. With this in mind, I wanted to use the Alves et al (2010) tree fern data to test the hypothesis that we will see the same pattern reflected for above ground biomass at mid-elevations in the Atlantic forests of Brazil. More specifically, I predict that the as elevation increased so does tree fern biomass. 
+
+### Random data set generation
+
+To test that hypothesis that tree fern biomass increased with elevation, I will first create a data frame for the data and then generate random data using the same samples sizes, means, and variance from the Alves et al (2010) study. 
+
+#### Data frame creation
+```{r, echo=TRUE}
+tf_data=data.frame(
+  plot=rep(1:12, times=1),
+  elevation= 0,
+  biomass=0) 
+
+print(tf_data)
+```
+
+#### Random data set input for tree fern elevational zones. 
+###### For the purposes of this exercise, elevations were not randomized and kept consistent for the 12 plots in the in the Alves et al (2010) study. The absolute value of the random normal number function was used in order to only generate elevational data, as below sea level elevations were not used in this study. 
+```{r, echo=TRUE}
+tf_data[1:12, "elevation"] = abs(rnorm(n= nrow(tf_data), mean = 462.33 , sd = 425.74)) 
+
+print(tf_data)
+```
+
+#### Random data set input for tree fern biomass. 
+For the purposes of this exercise, the mean and standard deviation for the above ground biomass (Mg ha^-1) was used. The absolute value of the random normal number function was used in order to only generate positive biomass data, as would be expected from this study. This will allow us to compare to continuous variables using a regression analysis. 
+```{r, echo=TRUE}
+tf_data[1:12, "biomass"] = abs(rnorm(n= nrow(tf_data), mean = 0.22 , sd = 0.27))  
+
+print(tf_data)
+```
+
+#### Data Analysis
+Now we will analyze the data and see if there is a a significant impact of elevation on tree fern biomass and create a figure illustrating the results. 
+```{r, echo=TRUE}
+library(ggplot2)
+
+# model
+tf_regModel <- lm(biomass~elevation,data=tf_data)
+print(tf_regModel) 
+
+# summary of model 
+summary(tf_regModel)
+
+# plot the data
+ggplot(tf_data) + 
+  geom_point(aes(x = biomass, y = elevation)) + 
+  geom_smooth(aes(x = biomass, y = elevation),
+              se = FALSE, 
+              col = "black",
+              method = lm) +
+  theme_bw()+ 
+  ggtitle("Affects of elevational change on tree fern biomass in the Atlantic Rainforest, Brazil") + 
+  ylab("Elevation (m)") + 
+  xlab("Biomass (Mg ha^-1)")
+```
+
+The summary of the linear regression model indicates that there is a significant interaction between biomass and elevation. However, the figure shows us that there is a negative relationship between tree fern elevation and biomass. With only 12 plots the trend is not clear as there appears to be a few outlier data points that are flattening the slope of the regression. 
+
+#### Re-run data to see how it changes
+```{r, echo=TRUE}
+tf_data[1:12, "elevation"] = abs(rnorm(n= nrow(tf_data), mean = 462.33 , sd = 425.74)) 
+
+tf_data[1:12, "biomass"] = abs(rnorm(n= nrow(tf_data), mean = 0.22 , sd = 0.27))  
+
+# model
+tf_regModel <- lm(biomass~elevation,data=tf_data)
+print(tf_regModel) 
+
+# summary of model 
+summary(tf_regModel)
+
+# plot the data
+ggplot(tf_data) + 
+  geom_point(aes(x = biomass, y = elevation)) + 
+  geom_smooth(aes(x = biomass, y = elevation),
+              se = FALSE, 
+              col = "black",
+              method = lm) +
+  theme_bw()+ 
+  ggtitle("Affects of elevational change on tree fern biomass") + 
+  ylab("Elevation (m)") + 
+  xlab("Biomass (Mg ha^-1)")
+```
+
+After re-running the data more than 10 times, the relationship between biomass and elevation was at time significant and at times not significant. I was not surprised by this as I though with such a small sample size (n=12) that there would not be a strong enough interaction in order to be  constantly significant when using random positive numbers. The plots continue to show us negative relationships with biomass and elevation but also showed a positive slope in some of the tests, where increases in elevation lead to an increase in tree fern biomass. 
+
+
+#### Limits of the data: mean and sample size
+##### After looking at the initial results of the data, I will now adjust the mean and sample size to see how it affects my results. 
+
+##### Variation of the means
+```{r, echo=TRUE}
+# Means 50% reduced
+tf_data2=data.frame(
+  plot=rep(1:12, times=1),
+  elevation= 0,
+  biomass=0) 
+
+tf_data2[1:12, "elevation"] = abs(rnorm(n= nrow(tf_data2), mean = 231.165 , sd = 425.74)) 
+
+tf_data2[1:12, "biomass"] = abs(rnorm(n= nrow(tf_data2), mean = 0.11 , sd = 0.27))  
+
+tf_regModel2 <- lm(biomass~elevation,data=tf_data2)
+print(tf_regModel2)
+summary(tf_regModel2)
+
+# Means 90% reduced 
+tf_data3=data.frame(
+  plot=rep(1:12, times=1),
+  elevation= 0,
+  biomass=0) 
+
+tf_data3[1:12, "elevation"] = abs(rnorm(n= nrow(tf_data3), mean = 46.233, sd = 425.74)) 
+
+tf_data3[1:12, "biomass"] = abs(rnorm(n= nrow(tf_data3), mean = 0.022, sd = 0.27))  
+
+tf_regModel3 <- lm(biomass~elevation,data=tf_data3)
+print(tf_regModel3)
+summary(tf_regModel3)
+
+```
+
+Changing the mean did not have so much of an affect on th interaction between tree fern biomass. Both results varied between significant and not significant after a few runs on each. 
+
+##### Variation in sample size
+```{r, echo=TRUE}
+# sample size 50% reduced 
+tf_data4=data.frame(
+  plot=rep(1:6, times=1),
+  elevation= 0,
+  biomass=0) 
+
+tf_data4[1:6, "elevation"] = abs(rnorm(n= nrow(tf_data4), mean = 462.33, sd = 425.74)) 
+
+tf_data4[1:6, "biomass"] = abs(rnorm(n= nrow(tf_data4), mean = 0.22, sd = 0.27))  
+
+tf_regModel4 <- lm(biomass~elevation,data=tf_data4)
+print(tf_regModel4)
+summary(tf_regModel4)
+
+# sample size 10 fold increase
+tf_data5=data.frame(
+  plot=rep(1:120, times=1),
+  elevation= 0,
+  biomass=0) 
+
+tf_data5[1:120, "elevation"] = abs(rnorm(n= nrow(tf_data5), mean = 462.33, sd = 425.74)) 
+
+tf_data5[1:120, "biomass"] = abs(rnorm(n= nrow(tf_data5), mean = 0.22, sd = 0.27))  
+
+tf_regModel5 <- lm(biomass~elevation,data=tf_data5)
+print(tf_regModel5)
+summary(tf_regModel5)
+```
+
+Alterations made to sample size had a large impact on the significance of the results. By reducing the sample size by half (n=6), all of the subsequent runs resulted in a non-significant interaction between elevation and tree fern biomass. However, simply by increase our sample plots from 12 to 120, greatly influenced the significance of the results, and after running the model using the increased sample size resulted in all tests producing a  significant relationship between elevation and fern biomass. With this being said many of the slopes varied between positive and negative relationships. 

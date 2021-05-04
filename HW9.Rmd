@@ -1,0 +1,188 @@
+---
+title: "HW9"
+author: "Bertrand Black"
+date: "04/18/2021"
+output: html_document
+---
+#### Set-up
+
+####### Structured program to analyze tree fern elevational biomass data from the Atlantic forests of southern Brazil. Data sourced from Alves et al (2019).
+
+#### Functions
+```{r, echo=TRUE}
+
+##################################################
+# FUNCTION: fetch_ferndata
+# read in .csv files
+# input: .csv file
+# output: data frame
+#------------------------------------------------- 
+fetch_ferndata <- function(file_name=NULL) {
+  if(is.null(file_name)) {
+    data_frame <-data.frame(ID=101:110,
+                            varA=runif(10),
+                            varA=runif(10))
+  } else {
+    data_frame <- read.table(file=file_name,
+                             header = TRUE,
+                             sep =",",
+                             comment.char = "#")
+  }
+  return(data_frame)
+}
+
+##################################################
+# FUNCTION: lm_ferndata
+# fit an linear model to the fern data
+# input: data frame with x continuous predictor vector and y continuous response vector of same length
+# output: entire summary of linear regression model
+#------------------------------------------------- 
+lm_ferndata <- function(x_var=runif(10),
+                            y_var=runif(10)) {
+  
+  data.frame <- data.frame(x_var,y_var)
+  reg_model <- lm(y_var~x_var)
+  return(summary(reg_model))
+}
+
+##################################################
+# FUNCTION: sum_ferndata
+# pull elements from model summary list
+# input: list from a summary call of a linear model
+# output: vector of regression residuals for model
+#------------------------------------------------- 
+sum_ferndata <- function(z=NULL) {
+  if(is.null(z)) {
+    z <- summary(lm(x~y))
+  }
+  
+  return(z$residuals)
+}
+
+##################################################
+# FUNCTION: graph_ferndata
+# Use ggplot2 to graphically represent linear model of fern data
+# input: data frame of response and predictor variables 
+# output: linear regression figure 
+#------------------------------------------------- 
+graph_ferndata <- function(x_var=runif(10),
+                            y_var=runif(10)) {
+  data.frame <- data.frame(x_var,y_var)
+# p1 <-ggplot2::qplot(data=data.frame,
+#                     x=x_var,
+#                     y=y_var,
+#                     geom=c("smooth","point"))
+
+p1 <-ggplot2::ggplot(data=data.frame) +
+                    aes(x=x_var, y=y_var) + 
+                    geom_point() +
+                    stat_smooth(method="lm") + labs(title="Atlantic forest tree fern biomass on an elevational gradient", x="Elevation (m)", y="Biomass (Mg ha^1)")
+
+suppressMessages(print(p1))
+}
+
+```
+
+#### Program Body 1 
+```{r, echo=TRUE}
+
+##### Prelimiaries 
+library(ggplot2)
+#--------------------------------
+
+##### Global variables 
+tf_data <- "treefern_data1.csv"
+xCol <- 2 # elevation of each plot
+yCol <- 4 # tree fern biomass (Mg ha^1)
+#--------------------------------
+
+# construct data frame
+temp_1 <-fetch_ferndata(file_name = tf_data)
+
+x <-temp_1[,xCol] # extract predictor variable
+y <-temp_1[,yCol] # extract response variable
+
+temp_2 <- lm_ferndata(x_var=x,y_var=y)
+
+# extract the residuals 
+temp_3 <- sum_ferndata(temp_2)
+
+# graph results 
+graph_ferndata(x_var = x, y_var = y)
+
+print(temp_3)  # print residuals 
+
+print(temp_2) # print model summary
+```
+
+##### New Function: Anova Test and plot 
+```{r, echo=TRUE}
+
+##################################################
+# FUNCTION: fern_anova
+# runs an ANOVA on the data
+# input: data frame with a categorical predictor variable and a continues response variable. 
+# output: summary stats: means of each group, F-statistic, and p-value
+#------------------------------------------------- 
+fern_anova <- function(x_var=runif(12),
+                            y_var=runif(12)) {
+  
+  ferndata=as.data.frame(x_var,y_var)
+  
+  fern_model <- aov(y_var~x_var,ferndata)
+  fernsum <-summary(fern_model)
+  
+  unlist(fernsum)
+  fernsum_Anova <- list(Fval=unlist(fernsum)[7],probF=unlist(fernsum)[9],zone_mean=aggregate(y_var~x_var, date=ferndata,FUN=mean))
+
+
+return(fernsum_Anova)
+}
+
+##################################################
+# FUNCTION: plot_fernanova
+# plots the data in a boxplot for each elevational zone
+# input: data frame with a categorical predictor variable and a continues response variable. 
+# output: ggplot boxplot figure
+#------------------------------------------------- 
+plot_fernanova <- function(x_var=runif(10),
+                                   y_var=runif(10)) {
+  
+  ferndata2=as.data.frame(x_var,y_var)
+  
+  anova.plot <- ggplot(data=ferndata2, aes(x=x_var, y=y_var, fill=x_var)) + geom_boxplot() + labs(title="Mean Atlanitc forest tree fern biomass by elevational zone",y="Biomass (Mg ha^-1)", x="") + theme(legend.position = "none") 
+
+  return(anova.plot)
+}
+
+```
+
+##### Program Body 2 
+```{r, echo=TRUE}
+
+##### Prelimiaries 
+library(ggplot2)
+#--------------------------------
+
+##### Global variables 
+tf_data <- "treefern_data1.csv"
+xCol <- 5 # elevation zone categories
+yCol <- 4 # tree fern biomass (Mg ha^1)
+#--------------------------------
+
+# construct data frame
+temp1 <-fetch_ferndata(file_name = tf_data)
+
+x <-temp1[,xCol] # extract predictor variable
+y <-temp1[,yCol] # extract response variable
+
+# Analyze and summarize data frame 
+temp2 <- fern_anova(x_var=x,y_var=y)
+
+# graph results 
+plot_fernanova(x_var = x, y_var = y)
+
+print(temp2)  # print means, F-statistic, and p-value
+
+```
+

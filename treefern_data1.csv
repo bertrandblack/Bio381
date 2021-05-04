@@ -1,0 +1,13 @@
+plot,elevation,stems,biomass,Zone
+1,46,10,0.09,lowland
+2,57,13,0.17,lowland
+3,64,19,0.21,lowland
+4,73,1,0.01,lowland
+5,188,5,0.08,submontane
+6,208,9,0.08,submontane
+7,350,0,0,submontane
+8,375,4,0.03,submontane
+9,1025,54,0.58,montane
+10,1045,19,0.3,montane
+11,1051,12,0.09,montane
+12,1066,25,0.94,montane

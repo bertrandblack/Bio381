@@ -1,0 +1,258 @@
+---
+title: "HW10"
+author: "Bertrand Black"
+date: "5/01/2021"
+output: html_document
+---
+#### Question #1: 
+Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable `counter <- 0`. Inside the loop, add 1 to counter each time you have a zero in the matrix. Finally, use `return(counter)` for the output.
+```{r, echo=TRUE}
+library(ggplot2)
+
+#################################################
+# FUNCTION: count_zero
+# description: calculate the number of zeros in a numeric vector 
+# input: a numeric vector matrix
+# output: number of zeros in the numeric vector matrix
+#------------------------------------------------- 
+count_zero <- function(x = c(rep(-1:2,100))) { # start of function
+    
+  counter <- 0 
+  
+  for (i in seq_along(x)) { # start of for loop
+    if (x[i] == 0) { # start of if statement 
+      
+      counter <- counter + 1
+      
+    } # end of if statement 
+  } # end of for loop
+  return(counter)
+} # end of count_zero function 
+#---------------------------------------------------
+count_zero() # test default settings of count_zero function 
+```
+
+##### Test with two different numeric vectors
+```{r, echo=TRUE}
+# With a numeric vector string:
+
+zero_vector <- c(0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0)
+count_zero(zero_vector)
+
+# With a matrix:
+
+zero_matrix <- matrix(rep(0:10,10), nrow = 10)
+print(zero_matrix)
+
+count_zero(zero_matrix)
+```
+
+#### Question #2: 
+Use subsetting instead of a loop to rewrite the function as a single line of code.
+```{r, echo=TRUE}
+zero_vector2 <-zero_vector[zero_vector == 0]
+length(zero_vector2)
+
+zero_matrix2 <-zero_matrix[zero_matrix == 0]
+length(zero_matrix2)
+
+```
+
+#### Question #3:
+Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+
+```{r, echo=TRUE}
+
+##################################################
+# FUNCTION: multiply_rowcolumn
+# description: creates a numeric vector where the output is a matrix with that is populated by the row number multiplied by the column number
+# input: the dimensions of the matrix
+# output: populated matrix 
+#------------------------------------------------- 
+multiply_rowcolumn <- function(row= 10, column = 10) { # start of function
+ 
+  matrix1 <- matrix(data = NA, nrow = row, ncol = column)
+  
+  for (i in 1:row) { # start of for loop i
+    
+   for(j in 1:column) { # start of for loop j
+     matrix1[i,j] = i * j 
+     
+  } # end of for loop j
+} # end of for loop i 
+  
+  return(matrix1)
+} # end of multipy_rowcolum function
+#------------------------------------
+multiply_rowcolumn()
+```
+
+##### Test with different matrix dimensions
+```{r, echo=TRUE}
+
+multiply_rowcolumn(5,10)
+
+multiply_rowcolumn(10, 5)
+
+```
+
+#### Question #4:
+Use the code from the April 8th lecture (Randomization Tests) to design and conduct a randomization test for some of your own data. You will need to modify the functions that read in the data, calculate the metric, and randomize the data. Once those are set up, the program should run correctly calling your new functions. Also, to make your analysis fully repeatable, make sure you set the random number seed at the beginning (use either set.seed() in base R, or char2seed in the TeachingDemos package
+
+* Using the functions from Randomization Tests lecture I modified them to read my own data set that I am working on assessing the different in morphology between two varieties of the fern Athyrium filix-femina: the northern lady fern (Athyrium filix-femina var angustum) and southern lady fern (Athyrium filix-femina var aspelenioides). 
+
+* My data set consists of 30 measurements (15 each) taken from the longest pinnae length (cm) of herbarium specimens of A. filix-femina var angustum (control) and compared them to the longest pinna length of A. filix-femina var aspelnioides (treatment). 
+```{r, echo=TRUE}
+# Preliminaries---------------------------------------
+library(ggplot2)
+library(TeachingDemos)
+
+char2seed("matte overload")
+
+
+# Start functions--------------------------------------
+
+#-------------------------------------------------
+# function: read_data
+# description: read in (or generate) data set for analysis
+# input: file name (or nothing, for this demo)
+# output: 3 column data frame of observed data (ID,x,y)
+#------------------------------------------------- 
+  read_data <- function(z=NULL) {
+    if(is.null(z)){
+          x_obs <- 1:20
+          y_obs <- x_obs + 10*rnorm(20)
+          df <- data.frame(ID=seq_along(x_obs),
+                       x_obs,
+                       y_obs)} # set up data frame                 
+  df <-read.csv(file=z,header=TRUE, stringsAsFactors=FALSE, sep=",")
+ 
+    return(df)
+  }
+#---------------------------------------------------------------
+#read_data()
+  
+#-------------------------------------------------
+# function: get_metric
+# description: calculate metric for randomization test
+# input: 22-column data frame for regression
+# output: regression slope
+#------------------------------------------------- 
+get_metric <- function(z=NULL) { # start of get_metric function
+        if(is.null(z)){ # start of if statement
+                x_obs <- 1:20
+                y_obs <-  x_obs + 10*rnorm(20)
+                z <- data.frame(ID=seq_along(x_obs),
+                                x_obs,
+                                y_obs)} # end of if statement
+  
+        . <- lm(z[,2]~z[,1])
+        . <- summary(.)
+        . <- .$coefficients[2,1]
+    
+        slope <- .
+        return(slope)
+} # end of get_metric function
+#-----------------------------------------------
+#get_metric()
+  
+#-------------------------------------------------
+# function: shuffle_data
+# description: randomize data for regression analysis
+# input: 3-column data frame (ID, xvar, yvar)
+# output: 3-column data frame (ID, xvar, yvar)
+#------------------------------------------------- 
+shuffle_data <- function(z=NULL) { # start of shuffle_data function
+              if(is.null(z)){ # start of if statement
+                x_obs <- 1:20
+                y_obs <-  x_obs + 10*rnorm(20)
+                z <- data.frame(ID=seq_along(x_obs),
+                                x_obs,
+                                y_obs)} # end of if statement
+    
+          z[,2] <- sample(z[,1]) 
+    
+    return(z)
+}
+#--------------------------------------------------
+#shuffle_data()
+
+#-------------------------------------------------
+# function: get_pval
+# description: calculate p value from simulation
+# input: list of observed metric, and vector of simulated metrics
+# output: lower, upper tail probability values
+#------------------------------------------------- 
+  get_pval <- function(z=NULL) {
+          if(is.null(z)){
+                z <- list(rnorm(1), rnorm(1000)) }
+                p_lower <- mean(z[[2]]<=z[[1]])
+                p_upper <- mean(z[[2]]>=z[[1]])
+                
+    return(c(pL=p_lower,pU=p_upper))
+  }
+#------------------------------------------------- 
+#get_pval()
+
+#------------------------------------------------- 
+# function: plot_ran_test
+# description: create ggplot of histogram of simulated values
+# input: list of observed metric and vector of simulated metrics
+# output: saved ggplot graph
+#------------------------------------------------- 
+plot_ran_test <- function(z=NULL) {
+                  if(is.null(z)){
+                          z <- list(rnorm(1),rnorm(1000)) }
+          df <- data.frame(ID=seq_along(z[[2]]),sim_x=z[[2]])
+          p1 <- ggplot(data=df,mapping=aes(x=sim_x))
+          p1 + geom_histogram(mapping=aes(fill=I("goldenrod"),
+                                          color=I("black"))) +
+          geom_vline(aes(xintercept=z[[1]],col="blue"))
+
+}
+#------------------------------------------------- 
+#plot_ran_test()
+
+# Run the functions together-------------------------------
+n_sim <- 10000 # number simulated data sets 
+x_sim <- rep(NA,n_sim) # set up empty vector for simulated slopes 
+
+df <- read_data(z="Athyrium_var.csv") # get (fake) data 
+x_obs <-get_metric(df) # get slope of observed data 
+
+for (i in seq_len(n_sim)) { 
+  x_sim[i] <- get_metric(shuffle_data(df)) # run simulation 
+}
+
+slopes <-list(x_obs, x_sim) 
+get_pval(slopes)
+plot_ran_test(slopes)
+```
+
+The simulated data and the observed data (blue line) are very similar with the majority of the simulations producing the same result as the observed data. This means that the control (pinnae of var angustum) group vs the treatment (pinnae of var asplenioides) group are not significantly different. 
+
+#### Question #5:
+For comparison, calculate in R the standard statistical analysis you would use with these data. How does the p-value compare for the standard test versus the p value you estimated from your randomization test? If the p values seem very different, run the program again with a different starting seed (and/or increase the number of replications in your randomization test). If there are persistent differences in the p value of the standard test versus your randomization, what do you think is responsible for this difference?
+```{r, echo=TRUE}
+library(ggplot2)
+
+aff_data <-read.csv("Athyrium_var.csv")
+
+# model
+reg_model <- lm(Asp_Pinnae~Ang_Pinnae,data=aff_data)
+
+# metric of coefficients: 
+summary(reg_model)$coefficients[] #all coefficeints
+
+# pvalue for: 
+summary(reg_model)$coefficients[2,4] 
+
+#plot 
+lm_plot <- ggplot(data=aff_data,
+                  aes(x=Ang_Pinnae,y=Asp_Pinnae)) +
+                  geom_point() +
+                  stat_smooth(method=lm,se=0.99) #
+print(lm_plot)
+```
+
+The p-value for the simulated data is lower than that of the observed data but neither were at all significant. Nothing changed when I increased the number simulations to 10000 or changed the randomized numbers to a different set. This would indicate that there is a high chance that the observed results were a matter of coincidence. This could be explained by a lack of independence between the two data sets resulting in correlation or violations to other assumptions of linear models such as (homoscedasticity or normality). As there are observable differences in morphology between the two varieties, in the future, I believe I could find a different result if instead I selected the same pinnae from each specimen such as the lower most set or used a different metric such as average length x with ratios of all pinnae. This result also tells me that pinnae length is not a good way to tell these two varieties. This could be due to a variety of environmental or developmental variables based on when these specimens were collected and where.  

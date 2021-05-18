@@ -1,5 +1,5 @@
 ---
-title: "My Homepage"
+title: "My PBIO 381 Homepage"
 author: "Bertrand Black"
 date: "May 2021"
 output:

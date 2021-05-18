@@ -106,6 +106,7 @@ write.table(x=df,
 } # end of function file_builder
 #------------------------------------------------- 
 
+
 #-------------------------------------------------
 # FUNCTION: reg_stats
 # description: fits linear models and extracts model stats
@@ -122,13 +123,13 @@ reg_stats <- function(d=NULL) { # start of function reg_stats
   . <-lm(data=d,d[,2]~d[,1])
   . <-summary(.)
 
-  elevXtemp_stats_list <- list(Slope=.$coefficents[2,1],
-                     pVal=.$coefficents[2,4],
+  elevXtemp_stats_list <- list(Slope=.$coefficients[2,1],
+                     pVal=.$coefficients[2,4],
                      r2=.$r.squared)
   . <-lm(data=d,d[,3]~d[,1])
   . <-summary(.)
-  elevXpercip_stats_list <- list(Slope=.$coefficents[2,1],
-                     pVal=.$coefficents[2,4],
+  elevXpercip_stats_list <- list(Slope=.$coefficients[2,1],
+                     pVal=.$coefficients[2,4],
                      r2=.$r.squared)
   
   return(c(elevXpercip_stats_list,elevXtemp_stats_list))
@@ -176,11 +177,11 @@ for (i in seq_along(file_names)) { # start of for loop
                                 sep=",",
                                 header=TRUE)
   d_clean <-data[complete.cases(data),] # subset for clean cases 
-
+ d_clean
   . <-reg_stats(d_clean) # pull out regression stats from clean file 
   
  cyclsorum_stats[i,3:8] <- unlist(.) # unlist, copy into last 3 columns 
-
+ 
 } # end of for loop
 #----------------------------------------------------------
 
@@ -206,6 +207,13 @@ write.table(x=cyclsorum_stats,
 print(cyclsorum_stats)
 ```
 
+Calculate the averages across all the files for slope, pvalue, and r2. 
+```{r, echo=TRUE}
+affvc_stats <-read.csv("Affvc_stats.csv")
+affvc_stats <-affvc_stats[3:8]
+colMeans(affvc_stats)
+```
+
 ###### Summary:
 * The first function (file_builder) worked properly to simulate 100 files of data based on the means and standard deviation of the observed A. filix-femina var cyclosorum occurance and bioclim data set. 
 
@@ -213,4 +221,4 @@ print(cyclsorum_stats)
 
 * Summary statistics such as slope, pval and r2 were calculated for regression model and test if there was a significant relationship between these two response variables. 
 
-* After looking at the results it appears that there is a significant relationship for elevation and temperature (pVal < 0.05) as well as for elevation and mean annual precipitation (PVal < 0.05). These results show that using simulated data based on the observed data these relationships cannot be based on chance alone. My next step would be to preform a PCA to test the covariances / correlations between all the variables in the data set to see which is producing the most variation. This results of this analysis would help me to continue to piece apart which environmental variables are most influential to the distribution of this interesting variety of Athyrium filix femina. 
+* After looking at the results it appears that there is not a significant relationship for elevation and temperature (pVal > 0.05) and the same result for elevation and mean annual precipitation (PVal > 0.05). My next step would be to preform a PCA to test the covariances / correlations between all the bioclim variables from the original data set to see which is producing the most variation. The results of the PCA analysis would help me to continue to piece apart which environmental variables are most influential to understading the biogeography and distribution of this interesting variety of Athyrium filix femina. 

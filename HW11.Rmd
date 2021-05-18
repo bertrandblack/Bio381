@@ -1,0 +1,222 @@
+---
+title: "HW11"
+author: "Bertrand Black"
+date: "5/17/2021"
+output: html_document
+---
+##### Question #1: 
+Repeat the exercise from the Batch Processing Lecture (13 April), but do it using real data sets rather than purely simulated. Check with folks in your lab to see if there are multiple data sets available for analysis, or ask Nick or Lauren for suggestions for other data sources. Stick to simple data analyses and graphics, but try to set it up as a batch process that will work on multiple files and save summary results to a common file.
+
+* For this assignment, I chose to use a data set from a recent paper that my adviser Michael Sundue worked on with Jacob Suissa and Weston Testo (Suissa et al, 2021). 
+
+* It is a large data set that includes many different fern and lycophyte taxa so I chose to extract one of the organisms that I plan on studying for my dissertation: the northwestern lady fern (Athyrium filix-femina var cyclosorum). 
+
+* The data was sourced from GBIF and bioclim data sets and contains the following five variables for 864 occurrences of Athyrium filix-femina var cyclosorum : elevation (m), mean annual temperature (C), annual precipitation (mm), soil carbon (Pg), soil pH. 
+
+* A central question to my research will be the delimiting where these different varieties occur with the most up-to-date techniques and determine if there are specific environmental variables that influence their current distribution. 
+
+* According to the Flora of North America this variety is found from 0 - 1600 m. For this assignment I will look and see if there is a significant relationship between elevation and mean annual temperature as well as mean annual precipitation. I will use simulated data based on the observed data with modified functions from the batch processing lecture to do this. 
+
+##### Simulation of multiple files from obersved data
+```{r, echo = TRUE}
+
+# upload the .csv file 
+affvc_data <- read.csv("a.ff_var_cyclosorum_occ_data.csv") 
+affvc_data[] <-lapply(affvc_data, as.numeric)
+
+# clean the data of NAs 
+clean_affvc <-affvc_data[complete.cases(affvc_data),]
+
+# calculate means of observational data set variables 
+elev_mean <-mean(clean_affvc$elevation)
+print(elev_mean)
+
+anntemp_mean <-mean(clean_affvc$annual_mean_temp)
+print(anntemp_mean)
+
+annpercip_mean <-mean(clean_affvc$annual_precipitation)
+print(annpercip_mean)
+
+# calculate standard deviation of observational data set variables 
+elev_sd <-sd(clean_affvc$elevation)
+print(elev_sd)
+
+anntemp_sd <-sd(clean_affvc$annual_mean_temp)
+print(anntemp_sd)
+
+annpercip_sd <-sd(clean_affvc$annual_precipitation)
+print(annpercip_sd)
+```
+
+##### Functions
+```{r, echo=TRUE}
+#------------------------------------------------
+# FUNCTION: file_builder
+# description: creates a random files for simulated regression
+# input: file_n = number of files to create 
+#        file_folder = name of folder for random files
+#        file_size = c(min,max) number of rows in file 
+#        file_NA = average of number of NA values per column
+# output: creats a set of random files 
+#------------------------------------------------- 
+file_builder <- function(file_n=10,
+                         file_folder="CyclosorumFiles/",
+                         file_size=c(15,100)) { # start of function file_builder
+  
+for (i in seq_len(file_n)) { # start of for loop 
+  file_length <- sample(file_size[1]:file_size[2],size=1)
+    affvc_elev <- rnorm(n=file_length, mean=elev_mean, sd=elev_sd) # create random elevations data
+    affvc_mat <- rnorm(n=file_length, mean=anntemp_mean, sd=anntemp_sd) # create random mean annual temperature data
+    affvc_map <- rnorm(n=file_length, mean=annpercip_mean, sd=annpercip_sd)# create random mean annual precipitation data
+  
+  df <- data.frame(affvc_elev,affvc_mat,affvc_map) # bind all three variables into a data frame
+
+# remove negaitves from simulated data 
+
+  df <-abs(df)
+  
+# create a label for the file name with padded zeros (ie., 01, 02, etc)
+  file_label <- paste(file_folder,"Cyclosorum",
+                      formatC(i,
+                              width=3,
+                              format="d",
+                              flag="0"),
+                              ".csv",
+                            sep="")
+  
+# set up data file and incorporate time stamp and minimal metadata 
+write.table(cat("# Simulated A.ff var cyclosorum data file for batch processing", 
+                "\n",
+                "# timestamp: ", as.character(Sys.time()),
+                "\n",
+                "# BKB", "\n",
+                "# --------------------------", "\n",
+                "\n",
+                file=file_label,
+                row.names="",
+                col.name="",
+                sep=""))
+
+# add the data frame
+write.table(x=df,
+            file=file_label,
+            sep=",",
+            row.names=TRUE)
+} # end of for loop
+} # end of function file_builder
+#------------------------------------------------- 
+
+#-------------------------------------------------
+# FUNCTION: reg_stats
+# description: fits linear models and extracts model stats
+# input: 3-column data frame (elevation, mean annual temperature and mean annual precipitation)
+# output: slope, p-value, and r2
+#------------------------------------------------- 
+reg_stats <- function(d=NULL) { # start of function reg_stats
+              if (is.null(d)) { # start of if statement 
+                elev <-runif(10)
+                temp <-runif(10)
+                percip <-runif(10)
+                d <- data.frame(elev,temp,percip)
+              } # end of if statement 
+  . <-lm(data=d,d[,2]~d[,1])
+  . <-summary(.)
+
+  elevXtemp_stats_list <- list(Slope=.$coefficents[2,1],
+                     pVal=.$coefficents[2,4],
+                     r2=.$r.squared)
+  . <-lm(data=d,d[,3]~d[,1])
+  . <-summary(.)
+  elevXpercip_stats_list <- list(Slope=.$coefficents[2,1],
+                     pVal=.$coefficents[2,4],
+                     r2=.$r.squared)
+  
+  return(c(elevXpercip_stats_list,elevXtemp_stats_list))
+} # end of function reg_stats
+#------------------------------------------------- 
+
+```
+
+
+##### Preliminaries 
+```{r, echo=TRUE}
+# libraries and seed-----------------------------------
+library(TeachingDemos)
+char2seed("Matte overload")
+
+# Global Variables--------------------------------
+file_folder <-"CyclosorumFiles/"
+n_files <-100
+file_out <- "Affvc_stats.csv"
+```
+
+##### Start analysis
+```{r, echo=TRUE}
+# create the data 
+dir.create(file_folder)
+file_builder(file_n = n_files) 
+file_names <-list.files(path=file_folder)
+
+# create data frame to hold the summary file stastics 
+ID <- seq_along(file_names)
+file_name <-file_names
+elevXtemp_slope <-rep(NA, length(file_names))
+elevXtemp_pVal <-rep(NA, length(file_names))
+elevXtemp_r2 <-rep(NA, length(file_names))
+elevXpercip_slope <-rep(NA, length(file_names))
+elevXpercip_pVal <-rep(NA, length(file_names))
+elevXpercip_r2 <-rep(NA, length(file_names))
+
+cyclsorum_stats <-data.frame(ID,file_name,elevXtemp_slope,elevXtemp_pVal,elevXtemp_r2,elevXpercip_slope,elevXpercip_pVal,elevXpercip_r2)
+# preform batch processing for each individual file with a for loop
+#---------------------------------------------------------------
+for (i in seq_along(file_names)) { # start of for loop 
+  data <- read.table(file=paste(file_folder, file_names[i],
+                                sep=""),
+                                sep=",",
+                                header=TRUE)
+  d_clean <-data[complete.cases(data),] # subset for clean cases 
+
+  . <-reg_stats(d_clean) # pull out regression stats from clean file 
+  
+ cyclsorum_stats[i,3:8] <- unlist(.) # unlist, copy into last 3 columns 
+
+} # end of for loop
+#----------------------------------------------------------
+
+# set up an output file and incorporate a time stamp and minimal metadata
+write.table(cat("# Summary stats for",
+                "batch processing of regression models",
+                "\n",
+                "# timestamp: ", as.character(Sys.time()),
+                "\n",
+                file=file_out,
+                row.names="",
+                col.names="",
+                sep=""))
+
+# now add the data frame
+write.table(x=cyclsorum_stats,
+            file=file_out,
+            row.names = FALSE,
+            col.names = TRUE,
+            sep=",")
+
+# Print results: 
+print(cyclsorum_stats)
+```
+
+Calculate the averages slope, pVal, and r2 for all the files. 
+```{r, echo=TRUE}
+affvc_stats <-read.csv("Affvc_stats.csv")
+affvc_sumstats <- affvc_stats[3:8]
+print(colMeans(affvc_sumstats))
+```
+###### Summary:
+* The first function (file_builder) worked properly to simulate 100 files of data based on the means and standard deviation of the observed A. filix-femina var cyclosorum occurance and bioclim data set. 
+
+* The second function successfully batch processed a regression model using elevation as an the observed variable and two different response variables: mean annual temperature (C) and mean annual precipitation (mm). This was done for all of 100 simulated files. 
+
+* Summary statistics such as slope, pval and r2 were calculated for regression model and test if there was a significant relationship between these two response variables. 
+
+* After looking at the results it appears that there is a significant relationship for elevation and temperature (pVal < 0.05) as well as for elevation and mean annual precipitation (PVal < 0.05). These results show that using simulated data based on the observed data these relationships cannot be based on chance alone. My next step would be to preform a PCA to test the covariances / correlations between all the variables in the data set to see which is producing the most variation. This results of this analysis would help me to continue to piece apart which environmental variables are most influential to the distribution of this interesting variety of Athyrium filix femina. 

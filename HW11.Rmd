@@ -206,12 +206,6 @@ write.table(x=cyclsorum_stats,
 print(cyclsorum_stats)
 ```
 
-Calculate the averages slope, pVal, and r2 for all the files. 
-```{r, echo=TRUE}
-affvc_stats <-read.csv("Affvc_stats.csv")
-affvc_sumstats <- affvc_stats[3:8]
-print(colMeans(affvc_sumstats))
-```
 ###### Summary:
 * The first function (file_builder) worked properly to simulate 100 files of data based on the means and standard deviation of the observed A. filix-femina var cyclosorum occurance and bioclim data set. 
 

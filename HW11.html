@@ -273,7 +273,7 @@ write.table(x=df,
 #-------------------------------------------------
 # FUNCTION: reg_stats
 # description: fits linear models and extracts model stats
-# input: 3-column data frame (elevation, mean annual temperature and mean annual percipitation)
+# input: 3-column data frame (elevation, mean annual temperature and mean annual precipitation)
 # output: slope, p-value, and r2
 #------------------------------------------------- 
 reg_stats &lt;- function(d=NULL) { # start of function reg_stats
@@ -667,14 +667,6 @@ print(cyclsorum_stats)</code></pre>
 ## 98       1.132605e-02     5.214232e-02   1.132605e-02
 ## 99       2.989498e-03     1.902928e-02   2.989498e-03
 ## 100      1.541308e-04     1.914574e-04   1.541308e-04</code></pre>
-<p>Calculate the averages slope, pVal, and r2 for all the files.</p>
-<pre class="r"><code>affvc_stats &lt;-read.csv(&quot;Affvc_stats.csv&quot;)
-affvc_sumstats &lt;- affvc_stats[3:8]
-print(colMeans(affvc_sumstats))</code></pre>
-<pre><code>##   elevXtemp_slope    elevXtemp_pVal      elevXtemp_r2 elevXpercip_slope 
-##        0.02021215        0.01673255        0.02021215        0.01673255 
-##  elevXpercip_pVal    elevXpercip_r2 
-##        0.02021215        0.01673255</code></pre>
 <div id="summary" class="section level6">
 <h6>Summary:</h6>
 <ul>
